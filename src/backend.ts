@@ -19,5 +19,6 @@ export async function analyzeText(text: string, idRef?: string){
     }),
   });
   const json = await result.json();
+  console.log(json);
   return {sents: json.analyzed_sents, concepts: json.concepts} as {sents: Result[], concepts: string[]};
 }

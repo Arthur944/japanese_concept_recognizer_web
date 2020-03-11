@@ -15,6 +15,8 @@ export function MainPage(){
     let file: File = e.target.files[0];
     const reader = new FileReader();
     reader.onloadend = () => {
+      console.log("idref set!");
+      console.log(reader.result);
       setIdRef(reader.result as string);
     };
     reader.readAsText(new Blob([file]));
@@ -31,7 +33,7 @@ export function MainPage(){
             </FormGroup>
             <FormGroup>
               <Label>Id reference csv (optional): </Label>
-              <Input type="file" onChange={(e) => console.log(e.target.files)}/>
+              <Input type="file" onChange={(e) => handleUpload(e)}/>
             </FormGroup>
             <Button onClick={async () => {
               setLoading(true);
@@ -57,7 +59,6 @@ export function MainPage(){
 }
 
 function ResultDisplay(data: Result){
-  console.log(data);
   const [activeIndex, setActiveIndex] = useState<number|null>(null);
   let displayData : {message: string, level: number, start: number, color: string, text: string, type: string, index?: number}[] = [];
   const words = data.verbose_found_words.map(([word, index, surface], mapIndex) => ({message:word, level: mapIndex, start: index[0], color: "red", text: surface}));
@@ -82,7 +83,6 @@ function ResultDisplay(data: Result){
    }
  });
  displayData = displayData.map((elem, index) => ({...elem, index}));
- console.log(displayData);
  return(
      <>
       <Container style={{marginTop:"2rem", marginBottom:"2rem", fontSize:"2rem"}}>
